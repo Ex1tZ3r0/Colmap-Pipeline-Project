@@ -27,18 +27,18 @@ def main():
             user_input = input("Enable CUDA Acceleration? \n (Y/N)\n").strip().lower()
             
             if user_input in ["y", "yes"]:
-                print ("CUDA Acceleration Enabled.")
+                print ("\nCUDA Acceleration Enabled.")
                 print_divider()
                 update_cache("enable_cuda", True)
                 return
             
             if user_input in ["n", "no"]:
-                print ("CUDA Acceleration Disabled.")
+                print ("\nCUDA Acceleration Disabled.")
                 print_divider()
                 update_cache("enable_cuda", False)
                 return
             
-            print("Invalid entry. Please enter 'Y' or 'N'.")
+            print("\nInvalid entry. Please enter 'Y' or 'N'.")
             
     def ask_proxy():
         while True:
@@ -52,18 +52,18 @@ def main():
                                ).strip().lower()
             
             if user_input in ["y", "yes"]:
-                print("Proxy Frames Enabled")
+                print("\nProxy Frames Enabled")
                 print_divider()
                 update_cache("enable_proxies", True)
                 return
             
             if user_input in ["n", "no"]:
-                print("Proxy Frames Disabled")
+                print("\nProxy Frames Disabled")
                 print_divider()
                 update_cache("enable_proxies", False)
                 return
             
-            print("Invalid entry. Please enter 'Y' or 'N'.")
+            print("\nInvalid entry. Please enter 'Y' or 'N'.")
     
     ask_cuda()
     ask_proxy()
@@ -72,9 +72,9 @@ def main():
     
     set_current_time()
     
-    exported_frames = extract_video_frames(media_files, proxy=False)
+    exported_frame_dir = extract_video_frames(media_files, proxy=False)
     if read_cache("enable_proxies"):
-        exported_frames = extract_video_frames(media_files, proxy=True)
+        exported_frame_dir = extract_video_frames(media_files, proxy=True)
 
     
     

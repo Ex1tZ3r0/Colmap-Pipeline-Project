@@ -1,6 +1,8 @@
 from pathlib import Path
 from config import VIDEO_DIR, FFMPEG_EXE, FFPROBE_EXE, OUTPUT_DIR, read_cache, set_current_time, ensure_dir_exists
+from typing import Callable
 from src.executer import run_command
+from src.parsers import basic_parser
 
 def detect_video_frames(media_files):
     
@@ -53,7 +55,8 @@ def extract_video_frames(media_files, proxy: bool = False):
         
         command.append(str(output_pattern))
         
-        exported_frames = output_pattern
+        exported_frame_dir = (output_pattern.resolve().parent)
         
-        run_command(command)
-        return exported_frames
+        run_command(command, basic_parser)
+        return exported_frame_dir
+    
