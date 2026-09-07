@@ -28,3 +28,4 @@ secrets.json
 
 #binaries and other folders
 bin/
+.vscode/
