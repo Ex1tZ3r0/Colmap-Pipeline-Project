@@ -1,0 +1,30 @@
+#Python crap
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+#Ve's
+.venv/
+venv/
+ENV/
+env/
+
+#Build Files
+build/
+dist/
+*.egg-info/
+
+# Windows Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+#Secrets and other stuff
+.env
+.env.*
+!.env.example
+secrets.json
+
+#binaries and other folders
+bin/
