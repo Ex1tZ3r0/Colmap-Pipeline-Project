@@ -4,6 +4,9 @@ from pathlib import Path
 from src.exceptions import MissingBinaries
 
 
+debug_ignore_parsers = False
+
+
 #Project Root
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
