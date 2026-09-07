@@ -1,23 +1,27 @@
 import subprocess
-import sys
+from config import debug_ignore_parsers
+from typing import Callable
 
-def run_command(command: list[str]):
-    process = subprocess.Popen(
-        command,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        text=True,
-        bufsize=1,
-    )
+def run_command(
+    command: list[str],
+    parser: Callable[[str], None] | None = None
+    ) -> int:
     
-    if process.stdout:
-        for line in process.stdout:
-            sys.stdout.write(line)
-            sys.stdout.flush()
-
-    return_code = process.wait()
-
-    if return_code != 0:
-        raise RuntimeError(f"Command failed with exit code {return_code}")
-
-    return return_code
+        process = subprocess.Popen(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1
+        )
+    
+        if process.stdout:
+            active_parser = None if debug_ignore_parsers else parser
+            for line in process.stdout:
+                if active_parser is not None:
+                    active_parser(line)
+                else:
+                    print(line, end="")
+            
+        process.stdout.close()
+        return process.wait()
