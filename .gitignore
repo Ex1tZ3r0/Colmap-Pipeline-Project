@@ -29,3 +29,10 @@ secrets.json
 #binaries and other folders
 bin/
 .vscode/
+
+#Generated user data
+exports/
+videos/
+
+#Temporary Files
+cache.json
