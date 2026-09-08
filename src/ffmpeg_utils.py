@@ -57,6 +57,11 @@ def extract_video_frames(media_files, proxy: bool = False):
         
         exported_frame_dir = (output_pattern.resolve().parent)
         
-        run_command(command, basic_parser)
-        return exported_frame_dir
-    
+        run_command(command,)
+        
+        if proxy:
+            proxy_frame_dir = exported_frame_dir
+            return proxy_frame_dir
+        else:
+            full_frame_dir = exported_frame_dir
+            return full_frame_dir
