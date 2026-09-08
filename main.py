@@ -3,6 +3,8 @@ from config import print_divider, confirm_binaries_present, read_cache, update_c
 from src.exceptions import MissingBinaries, NoMedia, FileProcessingError
 from src.media_utils import scanForMediaFiles
 from src.ffmpeg_utils import detect_video_frames, extract_video_frames
+from src.colmap_utils import feature_extractor, sequential_matcher, view_graph_calibrator, global_mapper, point_triangulator, point_filtering, model_orientation_aligner, convert_model
+from src.executer import run_command
 
 def main():
     print_divider()
@@ -67,22 +69,31 @@ def main():
     
     ask_cuda()
     ask_proxy()
-    
-    proxy = read_cache("enable_proxies")
-    
     set_current_time()
     
-    exported_frame_dir = extract_video_frames(media_files, proxy=False)
+    full_frame_dir = extract_video_frames(media_files, proxy=False)
+    proxy_frame_dir = None
+    
     if read_cache("enable_proxies"):
-        exported_frame_dir = extract_video_frames(media_files, proxy=True)
-
+        proxy_frame_dir = extract_video_frames(media_files, proxy=True)
+        
+    feature_extractor(full_frame_dir, proxy_frame_dir)
     
+    sequential_matcher()
     
-    #try:
-        #detect_video_frames(media_files)
-    #except FileProcessingError as err:
-        #print(f"ERROR: {err}")
-        #return
+    view_graph_calibrator()
+    
+    global_mapper()
+    
+    point_triangulator()
+    
+    point_filtering()
+    
+    model_orientation_aligner()
+    
+    convert_model("TXT")
+    convert_model("TXT", parent=True)
+    
 
 if __name__ == "__main__":
     main()
