@@ -4,8 +4,9 @@ from pathlib import Path
 from src.exceptions import MissingBinaries
 
 
-debug_ignore_parsers = False
-
+debug_ignore_parsers = True
+debug_force_basic_parser = True
+debug_broadcast_commands = True
 
 #Project Root
 BASE_DIR = Path(__file__).resolve().parent
@@ -23,6 +24,7 @@ FFPROBE_EXE = FFMPEG_DIR / "bin" / "ffprobe.exe"
 COLMAP_EXE = COLMAP_DIR / "bin" / "colmap.exe"
 
 CACHE_FILE = DATA_DIR / "cache.json"
+SETTINGS_FILE = DATA_DIR / "settings.json"
 
 #Create directories if missing function
 def ensure_dir_exists(*directories: Path):
@@ -56,6 +58,18 @@ def read_cache(key: str, default=None):
         return default
 
     with open(CACHE_FILE, "r", encoding="utf-8") as file_handle:
+        try:
+            data = json.load(file_handle)
+            return data.get(key, default)
+        except json.JSONDecodeError:
+            return default
+        
+def read_settings(key: str, default=None):
+    """Reads settings.json and retrieves given key"""
+    if not SETTINGS_FILE.exists():
+        return default
+
+    with open(SETTINGS_FILE, "r", encoding="utf-8") as file_handle:
         try:
             data = json.load(file_handle)
             return data.get(key, default)
