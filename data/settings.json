@@ -1,0 +1,8 @@
+{
+    "feature_extraction_type": "SIFT",
+    "feature_extraction_use_gpu": "1",
+    "image_reader_single_camera": "1",
+    "sift_extraction_max_num_features": "2048",
+    "sequential_matching_overlap": "15",
+    "model_orientation_method": "MANHATTAN-WORLD"
+}
