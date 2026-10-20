@@ -85,11 +85,11 @@ def main():
     
     global_mapper()
     
-    point_triangulator()
+    #point_triangulator()
     
-    point_filtering()
+    #point_filtering()
     
-    model_orientation_aligner()
+    #model_orientation_aligner()
     
     convert_model("TXT")
     convert_model("TXT", parent=True)
